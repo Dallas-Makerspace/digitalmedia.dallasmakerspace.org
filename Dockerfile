@@ -12,7 +12,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         openjdk-8-jre \
         openjdk-8-jdk \
         locales \
-        default-libmariadbclient-dev \
+#        default-libmariadbclient-dev \
         pkg-config \
 #        libzmq-dev \ #Conflicts with libzmq3-dev
         libxml2-dev \
@@ -62,7 +62,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         libxvidcore-dev \
         libdc1394-22-dev \
         libav-tools \
-        libmysqlclient-dev \
+        default-libmysqlclient-dev \
         # PHP requirements:
         libicu-dev libpng-dev libjpeg-dev libenchant-dev libmcrypt-dev libmagickwand-dev libcurl3-dev \
     && docker-php-ext-configure gd --enable-gd-native-ttf --with-jpeg-dir=/usr/lib/x86_64-linux-gnu --with-png-dir=/usr/lib/x86_64-linux-gnu \
