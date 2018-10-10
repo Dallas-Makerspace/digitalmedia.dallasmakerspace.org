@@ -1,11 +1,6 @@
 FROM php:7-fpm
 
-# http://stackoverflow.com/a/37426929
-RUN apt-get update && apt-get install -y apt-transport-https
-
-# First command is from: http://stackoverflow.com/a/37426929
-RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list \
-    && apt-get update && apt-get install -y --no-install-recommends --fix-missing \
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --fix-missing \
         imagemagick \
         libevent-dev \
         ufraw \
@@ -122,6 +117,10 @@ RUN printf "display_errors=on\ndisplay_startup_errors=on\n" >> /usr/local/etc/ph
        echo "php_admin_value[error_reporting] = E_ALL"; \
        echo "php_admin_value[error_log] = /var/log/php5-fpm.log"; \
     } | tee /usr/local/etc/php-fpm.d/zz-phrasea.conf
+# Install Composer.
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && ln -s $(composer config --global home) /root/composer
+ENV PATH $PATH:/root/composer/vendor/bin
 
 ENV ADMIN_EMAIL "phrasea@example.com"
 ENV ADMIN_PASSWORD "admin"
