@@ -1,0 +1,22 @@
+sudo: required
+
+services:
+  - docker
+  
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER .
+      - docker build -t $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $TRAVIS_REPO_SLUG:latest
+      - docker push $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER
+      - docker push $TRAVIS_REPO_SLUG:latest
+    - stage: test
+      script:
+        - docker run --rm $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER /bin/true
