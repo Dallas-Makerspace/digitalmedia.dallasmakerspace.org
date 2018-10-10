@@ -1,7 +1,7 @@
-FROM php:5-fpm
+FROM php:7-fpm
 
 # http://stackoverflow.com/a/37426929
-RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list
+RUN apt-get update && apt-get install -y apt-transport-https
 
 # First command is from: http://stackoverflow.com/a/37426929
 RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/demo/debian/ | awk '/^Link:/ { print $2 }' | sed -e 's@<http://\(.*\)/debian/>;@\1@g'`/" /etc/apt/sources.list \
