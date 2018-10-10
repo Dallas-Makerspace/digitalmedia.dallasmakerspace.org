@@ -9,8 +9,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         unoconv \
         gpac \
         swftools \
-        openjdk-8-jre \
-        openjdk-8-jdk \
+#       openjdk-8-jre \
+#       openjdk-8-jdk \
         locales \
 #        default-libmariadbclient-dev \
         pkg-config \
