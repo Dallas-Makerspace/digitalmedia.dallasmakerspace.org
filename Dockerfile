@@ -14,8 +14,8 @@ RUN sed -i "s/httpredir.debian.org/`curl -s -D - http://httpredir.debian.org/dem
         unoconv \
         gpac \
         swftools \
-        openjdk-7-jre \
-        openjdk-7-jdk \
+        openjdk-8-jre \
+        openjdk-8-jdk \
         locales \
 #        libmariadbclient-dev \
         pkg-config \
