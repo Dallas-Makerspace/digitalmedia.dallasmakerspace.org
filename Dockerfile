@@ -12,7 +12,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         openjdk-8-jre \
         openjdk-8-jdk \
         locales \
-#        libmariadbclient-dev \
+        default-libmariadbclient-dev \
         pkg-config \
 #        libzmq-dev \ #Conflicts with libzmq3-dev
         libxml2-dev \
