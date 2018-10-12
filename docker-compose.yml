@@ -12,7 +12,7 @@ services:
     deploy:
       replicas: 1
       labels:
-        orbital.enable: true
+        orbital.enable: "true"
         orbital.up: 3
         orbital.down: 1
         traefik.network: "public"
