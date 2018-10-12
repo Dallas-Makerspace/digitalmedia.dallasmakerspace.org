@@ -10,13 +10,6 @@ addons:
 
 jobs:
   include:
-    - stage: build docker image
-      script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker build -t $(echo $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER | tr 'A-Z' 'a-z') .
-      - docker build -t $(echo $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER $TRAVIS_REPO_SLUG:latest | tr 'A-Z' 'a-z')
-      - docker push $(echo $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER | tr 'A-Z' 'a-z')
-      - docker push $(echo $TRAVIS_REPO_SLUG:latest | tr 'A-Z' 'a-z')
     - stage: test
       script:
         - docker run --rm $(echo $TRAVIS_REPO_SLUG:$TRAVIS_BUILD_NUMBER | tr 'A-Z' 'a-z') /bin/true
