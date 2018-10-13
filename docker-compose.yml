@@ -23,6 +23,7 @@ services:
     depends_on:
       - db
       - redis
+      - search
     environment:
       ADMIN_EMAIL: "${ADMIN_EMAIL}"
       ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
@@ -33,6 +34,37 @@ services:
       DB_USER: "${DB_USER}"
       DB_PASSWORD: "${DB_PASSWORD}"
       
+  search: ## sysctl -w vm.max_map_count=262144
+    image: "elasticsearch:2.4"
+    command: "elasticsearch -Des.cluster.name='phraseanet'"
+    environment:
+      node.name: "search"
+      bootstrap.memory_lock: 'true'
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      ES_PLUGIN_mandatory: analysis-icu
+      ES_PLUGIN_analysis-icu: true
+
+    networks:
+      internal:
+        aliases:
+          - search
+          - search.dms.local
+     ulimits:
+       memlock:
+         soft: -1
+         hard: -1
+    deploy:
+      resources
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    ports:
+      - "9200/tcp"
+      - "9300/tcp"
+    
   db:
     image: mariadb
     ports:
